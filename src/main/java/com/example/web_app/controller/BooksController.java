@@ -1,4 +1,5 @@
 package com.example.web_app.controller;
+import com.example.web_app.dto.BookRequest;
 import com.example.web_app.dto.BookResponse;
 import com.example.web_app.service.BookService;
 import org.springframework.web.bind.annotation.*;
@@ -19,31 +20,22 @@ public class BooksController {
     public List<BookResponse> index(){
         return service.getAllBooks();
     }
-//
-//    @GetMapping("/books/{id}")
-//    public Optional<Book> show(@PathVariable int id){
-//      return repo.findById(id);
-//    }
-//
-//    @PostMapping("/books")
-//    public Book create(@RequestBody Book book){
-//        return repo.save(book);
-//    }
-//
-//    @PutMapping("/books")
-//    public Book update(@RequestBody Book book){
-//        return repo.save(book);
-//    }
-//    @PutMapping("/books/{id}")
-//    public ResponseEntity<Book> update(@PathVariable int id, @RequestBody Book book) {
-//        return repo.findById(id)
-//                .map(existingBook -> {
-//                    existingBook.setName(book.getName());
-//                    existingBook.setAuthor(book.getAuthor());
-//                    return ResponseEntity.ok(repo.save(existingBook));
-//                })
-//                .orElse(ResponseEntity.notFound().build());
-//    }
+
+    @GetMapping("/books/{id}")
+    public BookResponse show(@PathVariable int id){
+      return service.findBook(id);
+    }
+
+    @PostMapping("/books")
+    public BookResponse create(@RequestBody BookRequest bookRequest){
+        return service.createBook(bookRequest);
+    }
+
+
+    @PutMapping("/books/{id}")
+    public BookResponse update(@RequestBody BookRequest bookRequest, @PathVariable int id){
+        return service.updateBook(bookRequest, id);
+    }
 //
 //    @DeleteMapping("/books/{id}")
 //    public ResponseEntity<?> delete(@PathVariable int id) {
